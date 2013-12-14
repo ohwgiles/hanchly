@@ -14,3 +14,4 @@ macro(add_gtest TESTNAME)
 endmacro()
 
 # Add tests here
+add_gtest(test_pinyin)
