@@ -6,6 +6,7 @@
 TEST(Pinyin, SyllableBreaks) {
 	EXPECT_STREQ("hao0 jiu0 bu0 jian0 le0", pinyin_compose("haojiubujianle"));
 	EXPECT_STREQ("zha0 qie0 zi0 gai0 fan0", pinyin_compose("zhaqiezigaifan"));
+	EXPECT_STREQ("a0 a0 a0 a0", pinyin_compose("aaaa"));
 }
 
 TEST(Pinyin, ForcedBreak) {
