@@ -15,3 +15,4 @@ endmacro()
 
 # Add tests here
 add_gtest(test_pinyin)
+add_gtest(test_enpy)
