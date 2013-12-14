@@ -10,8 +10,9 @@ set(CMAKE_CXX_FLAGS_RELEASE "-Os -DNDEBUG")
 include(scripts/objcopy.cmake)
 
 add_as_obj(data/pinyin_syllables)
+add_as_obj(data/english_pinyin)
 
-add_library(hanchly pinyin.c ${OBJCOPY_BINARIES})
-set_target_properties(hanchly PROPERTIES COMPILE_FLAGS "-std=c99")
+add_library(hanchly enpy.c pinyin.c ${OBJCOPY_BINARIES})
+set_target_properties(hanchly PROPERTIES COMPILE_FLAGS "-std=gnu11")
 
 add_subdirectory(test)
