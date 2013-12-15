@@ -25,14 +25,32 @@ add_custom_command(OUTPUT char_freq COMMAND cat
 		${CMAKE_CURRENT_BINARY_DIR}/jun_da_freq_classical.csv
 		scripts/create_freq_table.sh)
 
+file(DOWNLOAD "http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz"
+		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt.gz
+		EXPECTED_MD5 2e346114d4714f9358144aa8b1a6f8ad
+		SHOW_PROGRESS)
+add_custom_command(OUTPUT cedict_1_0_ts_utf-8_mdbg.txt COMMAND gunzip -k
+		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt.gz
+		DEPENDS
+		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt.gz)
+add_custom_command(OUTPUT cedict COMMAND perl -C
+		${CMAKE_CURRENT_SOURCE_DIR}/scripts/create_dict.pl
+		${CMAKE_CURRENT_BINARY_DIR}/char_freq
+		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt
+		${CMAKE_CURRENT_BINARY_DIR}/cedict
+		DEPENDS
+		${CMAKE_CURRENT_BINARY_DIR}/char_freq
+		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt
+		${CMAKE_CURRENT_SOURCE_DIR}/scripts/create_dict.pl)
+
 include(scripts/objcopy.cmake)
 
 add_as_obj(data/pinyin_syllables)
 add_as_obj(data/english_pinyin)
 add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/char_freq)
+add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/cedict)
 
 add_library(hanchly enpy.c pinyin.c ${OBJCOPY_BINARIES})
 set_target_properties(hanchly PROPERTIES COMPILE_FLAGS "-std=gnu11")
 
 add_subdirectory(test)
-
