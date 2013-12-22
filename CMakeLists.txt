@@ -50,7 +50,7 @@ add_as_obj(data/english_pinyin)
 add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/char_freq)
 add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/cedict)
 
-add_library(hanchly enpy.c pinyin.c ${OBJCOPY_BINARIES})
+add_library(hanchly cedict.c enpy.c pinyin.c ${OBJCOPY_BINARIES})
 set_target_properties(hanchly PROPERTIES COMPILE_FLAGS "-std=gnu11")
 
 add_subdirectory(test)
