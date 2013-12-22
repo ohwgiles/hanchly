@@ -52,5 +52,6 @@ add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/cedict)
 
 add_library(hanchly cedict.c enpy.c pinyin.c ${OBJCOPY_BINARIES})
 set_target_properties(hanchly PROPERTIES COMPILE_FLAGS "-std=gnu11")
+set_target_properties(hanchly PROPERTIES COMPILE_DEFINITIONS "_GNU_SOURCE")
 
 add_subdirectory(test)

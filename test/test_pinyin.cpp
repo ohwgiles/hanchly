@@ -23,3 +23,36 @@ TEST(Pinyin, NonSyllables) {
 	EXPECT_FALSE(pinyin_compose("hello"));
 }
 
+TEST(Pinyin, NonWildcardExactSearch) {
+	char haystack[] = "this isn't pinyin, but ni3 hao3 is";
+	char* nihao = pinyin_search(haystack, "ni3 hao3");
+	EXPECT_EQ(&haystack[23], nihao);
+}
+
+TEST(Pinyin, NonWildcardInexactSearch) {
+	char haystack[] = "this isn't pinyin, but ni3 hao3 is";
+	char* nihao = pinyin_search(haystack, "Ni3 hAo3");
+	EXPECT_EQ(&haystack[23], nihao);
+}
+
+TEST(Pinyin, WildcardExactSearch) {
+	char haystack[] = "this isn't pinyin, but ni3 hao3 is";
+	char* nihao = pinyin_search(haystack, "ni3 hao0");
+	EXPECT_EQ(&haystack[23], nihao);
+	nihao = pinyin_search(haystack, "ni0 hao3");
+	EXPECT_EQ(&haystack[23], nihao);
+	nihao = pinyin_search(haystack, "ni0 hao0");
+	EXPECT_EQ(&haystack[23], nihao);
+}
+
+TEST(Pinyin, WildcardInexactSearch) {
+	char haystack[] = "this isn't pinyin, but ni3 hao3 is";
+	char* nihao = pinyin_search(haystack, "Ni0 haO0");
+	EXPECT_EQ(&haystack[23], nihao);
+}
+
+TEST(Pinyin, SearchNoMatch) {
+	char haystack[] = "gen1 han4 yu3 zai4 yi4 qi3 de english sentence";
+	EXPECT_EQ(NULL, pinyin_search(haystack, "ni0 hao0"));
+}
+

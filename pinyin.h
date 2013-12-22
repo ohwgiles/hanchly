@@ -7,6 +7,7 @@ extern "C" {
 
 char* pinyin_compose(const char* s);
 
+char* pinyin_search(const char* haystack, const char* needle);
 
 #ifdef __cplusplus
 }
