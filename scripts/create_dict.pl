@@ -14,6 +14,8 @@ my @entries;
 $|++;
 $l = 0;
 
+print STDERR "skipping chars:";
+
 while(<CEDICT>) {
 	next if /^#/;
 	($simp, $py, $def) = /^\S+\s(\S+)\s\[([^\]]+)\]\s\/(.*)\//;
@@ -25,7 +27,7 @@ while(<CEDICT>) {
 		$nc++;
 	}
 	if($nc == 0) {
-		print STDERR "skip[$simp]";
+		print STDERR $simp;
 		next;
 	}
 	print STDERR "." if($l++%1000 == 0);
@@ -42,7 +44,7 @@ print STDERR "writing...";
 open DICT, ">", $ARGV[2];
 
 for $e (@sorted) {
-	print DICT "\x1e$e->{simp}\0$e->{py}\0$e->{def}\0";
+	print DICT "\x1e$e->{simp}\x1f$e->{py}\x1f$e->{def}\x1f";
 }
 
 print STDERR "done.\n";
