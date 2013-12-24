@@ -11,13 +11,16 @@ typedef enum {
 	HANCHLY_CEDICT_ENGLISH
 } cedict_search_t;
 
-struct cedict_result_s;
-typedef struct cedict_result_s cedict_result_t;
+typedef struct cedict_result_s {
+	const char* hanzi;
+	const char* pinyin;
+	const char* english;
+} cedict_result_t;
 
 typedef struct {
 	cedict_search_t type;
 	void* search_from;
-	int num_match;
+	int num_matches;
 	cedict_result_t* results;
 } cedict_t;
 
