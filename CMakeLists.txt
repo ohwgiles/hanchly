@@ -55,3 +55,7 @@ set_target_properties(hanchly PROPERTIES COMPILE_FLAGS "-std=gnu11")
 set_target_properties(hanchly PROPERTIES COMPILE_DEFINITIONS "_GNU_SOURCE")
 
 add_subdirectory(test)
+
+add_executable(hanchly-cli cli.c)
+set_target_properties(hanchly-cli PROPERTIES COMPILE_FLAGS "-std=gnu11")
+target_link_libraries(hanchly-cli hanchly)
