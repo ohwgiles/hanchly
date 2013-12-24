@@ -42,26 +42,38 @@ char* pinyin_search(const char* haystack, const char* _needle) {
 	// replace all the zero characters in the search string
 	// with real nulls. This will cause strcasestr to terminate
 	// early, so we can check for tone wildcard matching
-	char*z = strchrnul(needle, '0');
-	while(*z) {
-		*z = 0;
-		z = strchrnul(z, '0');
+	char*end = strchrnul(needle, '0');
+	while(*end) {
+		*end = 0;
+		end = strchrnul(end+1, '0');
 	}
-	// z is saved as the end of the string so we know when to
+	// the end of the string is saved so we know when to
 	// stop looking for wildcards
 
 	// loop through the haystack checking for the truncated needle
-	char* p = haystack;
-	while(p = strcasestr(p, needle)) {
-		char* q = rawmemchr(needle, '\0');
-		while(q < z) {
-			if(!(p[q-needle] >= '1' && p[q-needle] <= '5' && strcasecmp(&p[q-needle+1], &q[1]) == 0))
+	char* candidate = haystack;
+	while(candidate = strcasestr(candidate, needle)) {
+		// if there are no wildcards in this string, the while loop
+		// will not exectue and we will return immediately
+		char* last_wildcard = rawmemchr(needle, '\0');
+		while(last_wildcard < end) {
+			// if there are wildcards, we loop through them with
+			// rawmemchar( , '\0') until it finds the end of the
+			// string we saved earlier
+			char* next_wildcard = rawmemchr(last_wildcard+1, '\0');
+			// test for matching wildcard and matching substring until
+			// the next wildcard/end of string
+			if(candidate[last_wildcard-needle] < '1' ||
+				candidate[last_wildcard-needle] > '5' ||
+				strncasecmp(&candidate[last_wildcard-needle+1], &last_wildcard[1], next_wildcard-last_wildcard-1)
+			)
 				goto no_match;
-			q = rawmemchr(q+1, '\0');
+			last_wildcard = next_wildcard;
 		}
-		return p;
+		return candidate;
 no_match:
-		(void) 0;
+		// advance the search by the length of the needle
+		candidate += end-needle;
 	}
 	return 0;
 }
