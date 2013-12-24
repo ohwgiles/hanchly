@@ -3,9 +3,9 @@ project(hanchly)
 
 set(CMAKE_BUILD_TYPE Debug CACHE STRING "Debug or Release")
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-Os -DNDEBUG")
+#set(CMAKE_C_FLAGS "-Wall -Wextra -Werror")
+set(CMAKE_C_FLAGS_DEBUG "-g")
+set(CMAKE_C_FLAGS_RELEASE "-Os -DNDEBUG")
 
 file(DOWNLOAD "http://lingua.mtsu.edu/chinese-computing/statistics/char/download.php?Which=MO"
 		${CMAKE_CURRENT_BINARY_DIR}/jun_da_freq_modern.csv
