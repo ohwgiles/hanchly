@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
 		free(actual_search);
 
 	for(int i = 0; i < param.num_matches; ++i) {
-		printf("::> %s <::> %s <::> %s <::\n", param.results[i].hanzi, param.results[i].pinyin, param.results[i].english);
+		printf("%s\t%s\t%s\n", param.results[i].hanzi, param.results[i].pinyin, param.results[i].english);
 	}
 	cedict_free(param);
 
