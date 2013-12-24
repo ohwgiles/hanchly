@@ -1,6 +1,5 @@
 
 #include "cedict.h"
-
 #include "pinyin.h"
 #include <string.h>
 
@@ -34,16 +33,13 @@ cedict_t cedict_search(cedict_t param, const char* term) {
 
 	while(n < param.num_matches && p < &_binary_cedict_end) {
 		p = (*search_fn)(p, term);
-		if(!p) { puts("no match"); break; }
+		if(!p) break;
 		char* rs = memrchr(&_binary_cedict_start, 0x1e, p-&_binary_cedict_start);
 		char* ps = rawmemchr(rs+1,0x1f);
 		char* es = rawmemchr(ps+1,0x1f);
 		char* end = rawmemchr(es+1,0x1f);
 		int is_exact = (p[-1] == 0x1f || p[-1] == '/') && (p[len] == 0x1f || p[len] == '/');
-		if(is_exact) puts("EXACT:");
-		//puts(strndupa(rs+1, ps-rs-1));
-		//puts(strndupa(ps+1, es-ps-1));
-		//puts(strndupa(es+1, end-es-1));
+		//if(is_exact) puts("EXACT:");
 		p++;
 		results[n++] = (cedict_result_t) {
 			strndup(rs+1, ps-rs-1),
