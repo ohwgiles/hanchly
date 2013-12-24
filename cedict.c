@@ -56,3 +56,15 @@ cedict_t cedict_search(cedict_t param, const char* term) {
 	param.results = results;
 	return param;
 }
+
+void cedict_free(cedict_t param) {
+	for(int i = 0; i < param.num_matches; ++i) {
+		free(param.results[i].hanzi);
+		free(param.results[i].pinyin);
+		free(param.results[i].english);
+	}
+	free(param.results);
+}
+
+
+
