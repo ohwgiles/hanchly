@@ -21,6 +21,7 @@ typedef struct {
 	cedict_search_t type;
 	void* search_from;
 	int num_matches;
+	int exact_only;
 	cedict_result_t* results;
 } cedict_t;
 

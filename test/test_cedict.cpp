@@ -7,6 +7,7 @@ TEST(Cedict, EnglishCaseInsensitiveSearch) {
 	cedict_t c;
 	c.num_matches = 1;
 	c.type = HANCHLY_CEDICT_ENGLISH;
+	c.exact_only = 0;
 	c = cedict_search(c, "hEllO");
 	ASSERT_EQ(1, c.num_matches);
 	EXPECT_STREQ("你好", c.results[0].hanzi);
@@ -14,10 +15,29 @@ TEST(Cedict, EnglishCaseInsensitiveSearch) {
 	EXPECT_STREQ("Hello!/Hi!/How are you?", c.results[0].english);
 }
 
+TEST(Cedict, ExactResultMatch) {
+	cedict_t c;
+	c.num_matches = 1;
+	c.type = HANCHLY_CEDICT_ENGLISH;
+	c.exact_only = 1;
+	c = cedict_search(c, "Hello!");
+	EXPECT_EQ(1, c.num_matches);
+}
+
+TEST(Cedict, InexactResultNoMatch) {
+	cedict_t c;
+	c.num_matches = 1;
+	c.type = HANCHLY_CEDICT_ENGLISH;
+	c.exact_only = 1;
+	c = cedict_search(c, "Hello");
+	EXPECT_EQ(0, c.num_matches);
+}
+
 TEST(Cedict, HanziSearch) {
 	cedict_t c;
 	c.num_matches = 1;
 	c.type = HANCHLY_CEDICT_HANZI;
+	c.exact_only = 0;
 	c = cedict_search(c, "你好");
 	ASSERT_EQ(1, c.num_matches);
 	EXPECT_STREQ("你好", c.results[0].hanzi);
@@ -29,6 +49,7 @@ TEST(Cedict, PinyinWellFormedSearch) {
 	cedict_t c;
 	c.num_matches = 1;
 	c.type = HANCHLY_CEDICT_PINYIN;
+	c.exact_only = 1;
 	c = cedict_search(c, "ni3 hao3");
 	ASSERT_EQ(1, c.num_matches);
 	EXPECT_STREQ("你好", c.results[0].hanzi);
@@ -40,6 +61,7 @@ TEST(Cedict, PinyinCaseInsensitiveWildcardSearch) {
 	cedict_t c;
 	c.num_matches = 1;
 	c.type = HANCHLY_CEDICT_PINYIN;
+	c.exact_only = 1;
 	c = cedict_search(c, "ni0 hao0");
 	ASSERT_EQ(1, c.num_matches);
 	EXPECT_STREQ("你好", c.results[0].hanzi);
