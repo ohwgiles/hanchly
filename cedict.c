@@ -53,7 +53,7 @@ cedict_t cedict_search(cedict_t param, const char* term) {
 		// if we are only supposed to match exact results, test for this
 		if(param.exact_only && !(
 			// condition for exact match
-			(p[-1] == FIELD_SEPARATOR || p[-1] == '/') && (p[len] == FIELD_SEPARATOR || p[len] == '/')
+			(p[-1] == FIELD_SEPARATOR || p[-1] == RECORD_SEPARATOR || p[-1] == '/') && (p[len] == FIELD_SEPARATOR || p[len] == '/')
 		)) continue;
 		// otherwise we're good, continue
 		results[n++] = (cedict_result_t) {

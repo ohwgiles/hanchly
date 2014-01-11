@@ -37,7 +37,7 @@ TEST(Cedict, HanziSearch) {
 	cedict_t c;
 	c.num_matches = 1;
 	c.type = HANCHLY_CEDICT_HANZI;
-	c.exact_only = 0;
+	c.exact_only = 1;
 	c = cedict_search(c, "你好");
 	ASSERT_EQ(1, c.num_matches);
 	EXPECT_STREQ("你好", c.results[0].hanzi);
