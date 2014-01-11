@@ -22,6 +22,7 @@ int main(int argc, char** argv) {
 	cedict_t param;
 	param.type = -1;
 	param.num_matches = 5;
+	param.exact_only = 1;
 
 	for(int i = 1; i < argc; ++i) {
 		if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
@@ -77,16 +78,31 @@ int main(int argc, char** argv) {
 		}
 	}
 
+	int requested_results = param.num_matches;
 	char* old_locale = setlocale(LC_CTYPE, "en");
 	param = cedict_search(param, actual_search);
+
+	for(int i = 0; i < param.num_matches; ++i) {
+		printf("%s\t%s\t%s\n", param.results[i].hanzi, param.results[i].pinyin, param.results[i].english);
+	}
+
+	// if there weren't enough matches, try an inexact search
+	if(param.num_matches < requested_results) {
+		puts("searching inexact");
+		param.num_matches = requested_results - param.num_matches;
+		param.exact_only = 0;
+		param = cedict_search(param, actual_search);
+
+		for(int i = 0; i < param.num_matches; ++i) {
+			printf("%s\t%s\t%s\n", param.results[i].hanzi, param.results[i].pinyin, param.results[i].english);
+		}
+	}
+
 	setlocale(LC_CTYPE, old_locale);
 
 	if(actual_search != search)
 		free(actual_search);
 
-	for(int i = 0; i < param.num_matches; ++i) {
-		printf("%s\t%s\t%s\n", param.results[i].hanzi, param.results[i].pinyin, param.results[i].english);
-	}
 	cedict_free(param);
 
 	return 0;
