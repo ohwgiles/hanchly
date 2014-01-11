@@ -1,3 +1,12 @@
+##
+## Copyright (c) 2014 Oliver Giles
+## All rights reserved.
+##
+## This file is part of Hanchly (汉查利).
+## Hanchly is free software; resdistribution and use are
+## permitted under conditions stipulated in the file
+## COPYING, which is distributed with Hanchly.
+##
 cmake_minimum_required(VERSION 2.6)
 project(hanchly)
 
@@ -7,6 +16,9 @@ set(CMAKE_BUILD_TYPE Debug CACHE STRING "Debug or Release")
 set(CMAKE_C_FLAGS_DEBUG "-g")
 set(CMAKE_C_FLAGS_RELEASE "-Os -DNDEBUG")
 
+# Fetch Jun Da Frequency List tables. Tables are provided
+# for research and teaching/learning purposes; commercial
+# use must have prior written permission. See COPYING
 file(DOWNLOAD "http://lingua.mtsu.edu/chinese-computing/statistics/char/download.php?Which=MO"
 		${CMAKE_CURRENT_BINARY_DIR}/jun_da_freq_modern.csv
 		EXPECTED_MD5 fe5f1d5b9e3d147fd82a517742e20438
@@ -25,6 +37,8 @@ add_custom_command(OUTPUT char_freq COMMAND cat
 		${CMAKE_CURRENT_BINARY_DIR}/jun_da_freq_classical.csv
 		scripts/create_freq_table.sh)
 
+# Fetch CC-CEDICT. CC-CEDICT is licensed under the CC-BY-SA 3.0
+# See COPYING
 file(DOWNLOAD "http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz"
 		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt.gz
 		EXPECTED_MD5 2e346114d4714f9358144aa8b1a6f8ad

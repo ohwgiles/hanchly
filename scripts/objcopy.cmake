@@ -1,5 +1,12 @@
-
-
+##
+## Copyright (c) 2014 Oliver Giles
+## All rights reserved.
+##
+## This file is part of Hanchly (汉查利).
+## Hanchly is free software; resdistribution and use are
+## permitted under conditions stipulated in the file
+## COPYING, which is distributed with Hanchly.
+##
 macro(add_as_obj FILENAME)
 	if(IS_ABSOLUTE ${FILENAME})
 		file(RELATIVE_PATH FILENAME_RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${FILENAME})
