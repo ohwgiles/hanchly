@@ -56,6 +56,32 @@ add_custom_command(OUTPUT cedict COMMAND perl -C
 		${CMAKE_CURRENT_BINARY_DIR}/char_freq
 		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt
 		${CMAKE_CURRENT_SOURCE_DIR}/scripts/create_dict.pl)
+# Fetch the Unihan databese. Provided as-is by the Unicode
+# Consortium. See COPYING
+file(DOWNLOAD "http://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip"
+		${CMAKE_CURRENT_BINARY_DIR}/Unihan.zip
+		EXPECTED_MD5 36a62127fc62cc5b617f2bf4bc72b7fa
+		SHOW_PROGRESS)
+add_custom_command(OUTPUT
+		Unihan_Readings.txt
+		Unihan_DictionaryLikeData.txt
+		Unihan_RadicalStrokeCounts.txt
+		COMMAND unzip ${CMAKE_CURRENT_BINARY_DIR}/Unihan.zip
+		DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Unihan.zip)
+add_custom_command(OUTPUT unihan_data unihan_idx COMMAND perl -C
+		${CMAKE_CURRENT_SOURCE_DIR}/scripts/create_unihan.pl
+		${CMAKE_CURRENT_BINARY_DIR}/char_freq
+		${CMAKE_CURRENT_BINARY_DIR}/unihan_data
+		${CMAKE_CURRENT_BINARY_DIR}/unihan_idx
+		${CMAKE_CURRENT_BINARY_DIR}/Unihan_Readings.txt
+		${CMAKE_CURRENT_BINARY_DIR}/Unihan_DictionaryLikeData.txt
+		${CMAKE_CURRENT_BINARY_DIR}/Unihan_RadicalStrokeCounts.txt
+		DEPENDS
+		${CMAKE_CURRENT_BINARY_DIR}/char_freq
+		${CMAKE_CURRENT_BINARY_DIR}/Unihan_Readings.txt
+		${CMAKE_CURRENT_BINARY_DIR}/Unihan_DictionaryLikeData.txt
+		${CMAKE_CURRENT_BINARY_DIR}/Unihan_RadicalStrokeCounts.txt
+		${CMAKE_CURRENT_SOURCE_DIR}/scripts/create_unihan.pl)
 
 include(scripts/objcopy.cmake)
 
@@ -63,6 +89,8 @@ add_as_obj(data/pinyin_syllables)
 add_as_obj(data/english_pinyin)
 add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/char_freq)
 add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/cedict)
+add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/unihan_data)
+add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/unihan_idx)
 
 add_library(hanchly cedict.c enpy.c pinyin.c ${OBJCOPY_BINARIES})
 set_target_properties(hanchly PROPERTIES COMPILE_FLAGS "-std=gnu11")
