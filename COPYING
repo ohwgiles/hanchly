@@ -1,0 +1,56 @@
+Hanchly (汉查利) License Terms
+
+Copyright (c) 2014 Oliver Giles
+All rights reserved.
+
+Hanchly is free software; redistribution and use in source and binary forms,
+with or without modification, are permitted provided that the following
+conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice
+   and this list of conditions.
+2. Redistributions in binary form must reproduce the above copyright notice
+   and this list of conditions in the documentation and/or other materials
+   provided with the distribution.
+3. Hanchly includes resources from third-party sources. Insofar as a
+   redistributed version similarly depends on these resources, the redistributor
+   takes responsibility that his/her distribution meets the stipulated 
+   licensing requirements of the respective resources.
+
+Details of included resources:
+
+-- CC-CEDICT: http://cc-cedict.org/wiki/
+
+CC-CEDICT is a continuation of the CEDICT project. The objective of the CEDICT
+project was to create an online, downloadable (as opposed to searchable-only)
+public-domain Chinese-English dictionary. CEDICT was started by Paul Andrew
+Denisowski in October 1997. For the most part, the project is modeled on Jim
+Breen's highly successful EDICT (Japanese-English dictionary) project and is
+intended to be a collaborative effort, with users providing entries and
+corrections to the main file.
+
+CC-CEDICT is licensed under a Creative Commons Attribution-Share Alike 3.0 License.
+Details of this license can be found at http://creativecommons.org/licenses/by-sa/3.0/
+
+-- Unihan database: http://www.unicode.org/charts/unihan.html
+
+The Unihan database is provided as a public service by Unicode, Inc. These
+data are provided as-is by Unicode, Inc. (The Unicode Consortium). No claims
+are made as to fitness for any particular purpose. No warranties of any kind
+are expressed or implied. The recipient agrees to determine applicability of
+information provided.
+
+The data in the Unihan database derives from various sources, as documented in
+UAX 38 (http://www.unicode.org/reports/tr38/).
+
+-- Jun Da Character Frequency Lists: http://lingua.mtsu.edu/chinese-computing/statistics/
+
+The author of the content of these webpages maintains the copyright to the
+various character frequency/digram lists presented on this web site. They
+are provided here for research and teaching/learning purposes only. Any
+commercial use of the lists should have prior written permission from the
+author. Copyrights of the original texts based on which this study was conducted
+belong to their individual copyright holders. (Information about the orginal
+copyright owners can be found by following the links provided in the Sources
+of Chinese Texts section of the Technical Notes page.)
+
