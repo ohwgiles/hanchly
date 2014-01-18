@@ -106,6 +106,8 @@ int main(int argc, char** argv) {
 	if(type == SEARCH_UNIHAN) {
 		// do a unihan search
 		const unihan_entry_t* record = unihan_find(search);
+		if(record == NULL) return 1;
+		
 		printf("Frequency\t%d\nTotal Strokes\t%d\nHSK Grade\t%d\nRadical Number\t%d\nExtra Strokes\t%d\nCangjie Code\t%s\nDefinition\t%s\n", record->frequency, record->total_strokes, record->hsk_grade, record->radical, record->additional_strokes, record->cangjie, record->definition);
 
 	} else {

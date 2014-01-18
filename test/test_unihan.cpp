@@ -8,3 +8,8 @@ TEST(Unihan, Match) {
 	EXPECT_STREQ("HQI", wo->cangjie);
 }
 
+TEST(Unihan, NoMatch) {
+	unihan_entry_t* crap = unihan_find("asdf");
+	EXPECT_FALSE(crap);
+}
+
