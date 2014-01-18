@@ -21,7 +21,7 @@ typedef struct {
 	char radical;
 	char additional_strokes;
 	char cangjie[5];
-	char definiton[];
+	char definition[];
 } unihan_entry_t;
 
 unihan_entry_t* unihan_find(const char* hanzi);

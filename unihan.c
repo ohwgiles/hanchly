@@ -25,7 +25,7 @@ unihan_entry_t* unihan_find(const char* hanzi) {
 			_binary_char_freq_start,
 			_binary_char_freq_end - _binary_char_freq_start,
 			hanzi,
-			strlen(hanzi));
+			CHARS_IN_HANZI);
 	if(!hz_loc)
 		return 0;
 
