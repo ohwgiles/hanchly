@@ -47,7 +47,7 @@ add_custom_command(OUTPUT cedict_1_0_ts_utf-8_mdbg.txt COMMAND gunzip -k
 		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt.gz
 		DEPENDS
 		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt.gz)
-add_custom_command(OUTPUT cedict COMMAND perl -C
+add_custom_command(OUTPUT cedict COMMAND perl
 		${CMAKE_CURRENT_SOURCE_DIR}/scripts/create_dict.pl
 		${CMAKE_CURRENT_BINARY_DIR}/char_freq
 		${CMAKE_CURRENT_BINARY_DIR}/cedict_1_0_ts_utf-8_mdbg.txt
@@ -66,13 +66,15 @@ add_custom_command(OUTPUT
 		Unihan_Readings.txt
 		Unihan_DictionaryLikeData.txt
 		Unihan_RadicalStrokeCounts.txt
-		COMMAND unzip ${CMAKE_CURRENT_BINARY_DIR}/Unihan.zip
+		COMMAND unzip -o ${CMAKE_CURRENT_BINARY_DIR}/Unihan.zip
+		# the files are older than the archive, this confuses make
+		COMMAND touch Unihan_Readings.txt Unihan_DictionaryLikeData.txt Unihan_RadicalStrokeCounts.txt
 		DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Unihan.zip)
-add_custom_command(OUTPUT unihan_data unihan_idx COMMAND perl -C
+add_custom_command(OUTPUT unihan_data unihan_idx COMMAND perl
 		${CMAKE_CURRENT_SOURCE_DIR}/scripts/create_unihan.pl
 		${CMAKE_CURRENT_BINARY_DIR}/char_freq
-		${CMAKE_CURRENT_BINARY_DIR}/unihan_data
 		${CMAKE_CURRENT_BINARY_DIR}/unihan_idx
+		${CMAKE_CURRENT_BINARY_DIR}/unihan_data
 		${CMAKE_CURRENT_BINARY_DIR}/Unihan_Readings.txt
 		${CMAKE_CURRENT_BINARY_DIR}/Unihan_DictionaryLikeData.txt
 		${CMAKE_CURRENT_BINARY_DIR}/Unihan_RadicalStrokeCounts.txt
@@ -92,7 +94,7 @@ add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/cedict)
 add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/unihan_data)
 add_as_obj(${CMAKE_CURRENT_BINARY_DIR}/unihan_idx)
 
-add_library(hanchly cedict.c enpy.c pinyin.c ${OBJCOPY_BINARIES})
+add_library(hanchly cedict.c enpy.c pinyin.c unihan.c ${OBJCOPY_BINARIES})
 set_target_properties(hanchly PROPERTIES COMPILE_FLAGS "-std=gnu11")
 set_target_properties(hanchly PROPERTIES COMPILE_DEFINITIONS "_GNU_SOURCE")
 
