@@ -79,21 +79,21 @@ int main(int argc, char** argv) {
 		if(isascii(search[0])) {
 			char* py;
 			if(py = pinyin_compose(search)) {
-				param.type = HANCHLY_CEDICT_PINYIN;
+				type = HANCHLY_CEDICT_PINYIN;
 				actual_search = py;
 			} else
-				param.type = HANCHLY_CEDICT_ENGLISH;
+				type = HANCHLY_CEDICT_ENGLISH;
 		} else {
 			if(strlen(search) == 3)
 				type = SEARCH_UNIHAN;
 			else
-				param.type = HANCHLY_CEDICT_HANZI;
+				type = HANCHLY_CEDICT_HANZI;
 		}
 		fprintf(stderr, "Warning: no search type specified, inferring %s from search term\n",
 			type == SEARCH_UNIHAN ? "unihan" :
-			param.type == HANCHLY_CEDICT_PINYIN ? "pinyin" :
-			param.type == HANCHLY_CEDICT_HANZI ? "hanzi" :
-			param.type == HANCHLY_CEDICT_ENGLISH ? "english" : "");
+			type == HANCHLY_CEDICT_PINYIN ? "pinyin" :
+			type == HANCHLY_CEDICT_HANZI ? "hanzi" :
+			type == HANCHLY_CEDICT_ENGLISH ? "english" : "");
 	} else if(type == HANCHLY_CEDICT_PINYIN) {
 		actual_search = pinyin_compose(search);
 		if(actual_search == 0) {
