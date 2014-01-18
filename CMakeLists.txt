@@ -12,7 +12,7 @@ project(hanchly)
 
 set(CMAKE_BUILD_TYPE Debug CACHE STRING "Debug or Release")
 
-#set(CMAKE_C_FLAGS "-Wall -Wextra -Werror")
+set(CMAKE_C_FLAGS "-Wall -Wextra -Werror")
 set(CMAKE_C_FLAGS_DEBUG "-g")
 set(CMAKE_C_FLAGS_RELEASE "-Os -DNDEBUG")
 

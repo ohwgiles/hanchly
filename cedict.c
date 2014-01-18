@@ -10,16 +10,17 @@
 #include "cedict.h"
 #include "pinyin.h"
 #include <string.h>
+#include <stdlib.h>
 
-extern char _binary_cedict_start;
-extern char _binary_cedict_end;
+extern const char _binary_cedict_start[];
+extern const char _binary_cedict_end[];
 
-const char RECORD_SEPARATOR = 0x1e;
-const char FIELD_SEPARATOR = 0x1f;
+#define RECORD_SEPARATOR 0x1e
+#define FIELD_SEPARATOR 0x1f
 
 cedict_t cedict_search(cedict_t param, const char* term) {
 	size_t len = strlen(term);
-	const char* p = &_binary_cedict_start-1;
+	const char* p = _binary_cedict_start-1;
 
 	int n = 0;
 
@@ -40,12 +41,12 @@ cedict_t cedict_search(cedict_t param, const char* term) {
 	cedict_result_t* results = (cedict_result_t*) malloc(param.num_matches * sizeof(cedict_result_t));
 
 	char* last_record = 0;
-	while(n < param.num_matches && p < &_binary_cedict_end) {
+	while(n < param.num_matches && p < _binary_cedict_end) {
 		p = (*search_fn)(p+1, term);
 		// bail out if there are no more matches
 		if(!p) break;
 		// find the beginning of this entry
-		char* rs = memrchr(&_binary_cedict_start, RECORD_SEPARATOR, p-&_binary_cedict_start);
+		char* rs = memrchr(_binary_cedict_start, RECORD_SEPARATOR, p-_binary_cedict_start);
 		// if it's the same entry as the last match, discard it
 		if(rs == last_record)
 			continue;

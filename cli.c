@@ -9,7 +9,9 @@
 //
 #include "cedict.h"
 #include "unihan.h"
+#include "pinyin.h"
 #include <stdio.h>
+#include <ctype.h>
 #include <locale.h>
 #include <string.h>
 #include <stdlib.h>
@@ -78,7 +80,7 @@ int main(int argc, char** argv) {
 	if(type == SEARCH_GUESS) {
 		if(isascii(search[0])) {
 			char* py;
-			if(py = pinyin_compose(search)) {
+			if((py = pinyin_compose(search))) {
 				type = HANCHLY_CEDICT_PINYIN;
 				actual_search = py;
 			} else
@@ -97,7 +99,7 @@ int main(int argc, char** argv) {
 	} else if(type == HANCHLY_CEDICT_PINYIN) {
 		actual_search = pinyin_compose(search);
 		if(actual_search == 0) {
-			return fprintf(stderr, "%s is not recognised pinyin\n"), 1;
+			return fprintf(stderr, "%s is not valid pinyin\n", search), 1;
 		}
 	}
 

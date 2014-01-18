@@ -7,21 +7,22 @@
 // permitted under conditions stipulated in the file
 // COPYING, which is distributed with Hanchly.
 //
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <alloca.h>
 
-extern char _binary_pinyin_syllables_start;
-extern char _binary_pinyin_syllables_end;
+extern const char _binary_pinyin_syllables_start[];
+extern const char _binary_pinyin_syllables_end[];
 
 char* pinyin_compose(const char* input) {
 	while(*input == ' ' || *input == '\'') input++;
-	for(char* p = &_binary_pinyin_syllables_start; p < &_binary_pinyin_syllables_end;) {
+	for(const char* p = _binary_pinyin_syllables_start; p < _binary_pinyin_syllables_end;) {
 		int l = strlen(p);
 		if(strncmp(p,input,l) == 0) {
 			char* s = 0;
 			char tone = '0';
-			char* next = &input[l];
+			const char* next = &input[l];
 			if(input[l] >= '1' && input[l] <= '5') {
 				next++;
 				tone = input[l];
@@ -60,8 +61,10 @@ char* pinyin_search(const char* haystack, const char* _needle) {
 	// stop looking for wildcards
 
 	// loop through the haystack checking for the truncated needle
-	char* candidate = haystack;
-	while(candidate = strcasestr(candidate, needle)) {
+	// we don't actually modify the string. However, to conform with
+	// strstr and strcasestr, we must return a non-const char*
+	char* candidate = (char*) haystack;
+	while((candidate = strcasestr(candidate, needle))) {
 		// if there are no wildcards in this string, the while loop
 		// will not exectue and we will return immediately
 		char* last_wildcard = rawmemchr(needle, '\0');

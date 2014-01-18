@@ -7,9 +7,9 @@
 // permitted under conditions stipulated in the file
 // COPYING, which is distributed with Hanchly.
 //
-
 #include "unihan.h"
 #include <stdint.h>
+#include <string.h>
 
 #define CHARS_IN_HANZI 4
 
@@ -37,5 +37,5 @@ unihan_entry_t* unihan_find(const char* hanzi) {
 	int index = index_table[offset];
 
 	// return the found index into the data table
-	return &_binary_unihan_data_start[index];
+	return (unihan_entry_t*) &_binary_unihan_data_start[index];
 }
