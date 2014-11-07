@@ -36,7 +36,8 @@ char* pinyin_compose(const char* input) {
 
 			char* t = pinyin_compose(next);
 			if(t) {
-				asprintf(&s, "%s%c %s", p, tone, t);
+				if(asprintf(&s, "%s%c %s", p, tone, t) < 0)
+					s = 0;
 				free(t);
 				return s;
 			}
