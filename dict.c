@@ -11,6 +11,7 @@
 #include "pinyin.h"
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 extern const char _binary_cedict_start[];
 extern const char _binary_cedict_end[];
@@ -62,7 +63,7 @@ cedict_t cedict_search(cedict_t param, const char* term) {
 		// if we are only supposed to match exact results, test for this
 		if(param.exact_only && !(
 			// condition for exact match
-			(p[-1] == FIELD_SEPARATOR || p[-1] == RECORD_SEPARATOR || p[-1] == '/') && (p[len] == FIELD_SEPARATOR || p[len] == '/')
+			(p[-1] == FIELD_SEPARATOR || p[-1] == RECORD_SEPARATOR || p[-1] == '/') && (p[len] == FIELD_SEPARATOR || p[len] == '/' || (p[len] == ' ' && !isalpha(p[len+1])))
 		)) continue;
 		// otherwise we're good, continue
 		results[n++] = (cedict_result_t) {

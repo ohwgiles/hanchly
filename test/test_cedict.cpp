@@ -33,13 +33,26 @@ TEST(Cedict, ExactResultMatch) {
 	EXPECT_EQ(1, c.num_matches);
 }
 
-TEST(Cedict, InexactResultNoMatch) {
+TEST(Cedict, NoMatch) {
 	cedict_t c;
 	c.num_matches = 1;
 	c.type = HANCHLY_CEDICT_ENGLISH;
 	c.exact_only = 1;
-	c = cedict_search(c, "Hello");
+	c = cedict_search(c, "asdf");
 	EXPECT_EQ(0, c.num_matches);
+}
+
+TEST(Cedict, Inexact) {
+	cedict_t c;
+	c.num_matches = 50;
+	c.type = HANCHLY_CEDICT_ENGLISH;
+	c.exact_only = 1;
+	c = cedict_search(c, "cow");
+	int exactMatches = c.num_matches;
+	c.num_matches = 50;
+	c.exact_only = 0;
+	c = cedict_search(c, "cow");
+	EXPECT_LT(exactMatches, c.num_matches);
 }
 
 TEST(Cedict, HanziSearch) {
