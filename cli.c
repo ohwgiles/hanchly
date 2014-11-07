@@ -91,11 +91,6 @@ int main(int argc, char** argv) {
 			else
 				type = HANCHLY_CEDICT_HANZI;
 		}
-		fprintf(stderr, "Warning: no search type specified, inferring %s from search term\n",
-			type == SEARCH_UNIHAN ? "unihan" :
-			type == HANCHLY_CEDICT_PINYIN ? "pinyin" :
-			type == HANCHLY_CEDICT_HANZI ? "hanzi" :
-			type == HANCHLY_CEDICT_ENGLISH ? "english" : "");
 	} else if(type == HANCHLY_CEDICT_PINYIN) {
 		actual_search = pinyin_compose(search);
 		if(actual_search == 0) {
@@ -123,14 +118,25 @@ int main(int argc, char** argv) {
 
 		// if there weren't enough matches, try an inexact search
 		if(param.num_matches < requested_results) {
-			puts("searching inexact");
-			param.num_matches = requested_results - param.num_matches;
+			int n = 0;
+			int exact_matched = param.num_matches;
+			// search will also return duplicate results, must be manually filtered
+			param.num_matches = requested_results + exact_matched;
 			param.exact_only = 0;
-			param = cedict_search(param, actual_search);
+			cedict_t r = cedict_search(param, actual_search);
 
-			for(int i = 0; i < param.num_matches; ++i) {
-				printf("%s\t%s\t%s\n", param.results[i].hanzi, param.results[i].pinyin, param.results[i].english);
+			// not pretty
+			for(int i = 0; i < r.num_matches && n < requested_results - exact_matched; ++i) {
+				for(int j = 0; j < exact_matched; ++j) {
+					if(strcmp(param.results[j].hanzi,r.results[i].hanzi)==0)
+						goto next;
+				}
+				printf("%s\t%s\t%s\n", r.results[i].hanzi, r.results[i].pinyin, r.results[i].english);
+				n++;
+				next: (void) 0;
 			}
+			cedict_free(r);
+			param.num_matches = exact_matched;
 		}
 
 		setlocale(LC_CTYPE, old_locale);
