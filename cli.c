@@ -61,7 +61,9 @@ int main(int argc, char** argv) {
 		else if(strncmp(argv[i], "--lines=", 8) == 0 &&
 			(param.num_matches = atoi(&argv[i][9])))
 			(void) 0;
-		else if(argv[i][0] == '-') {
+		else if(argv[i][0] == '-' && isdigit(argv[i][1]))
+			param.num_matches = atoi(&argv[i][1]);
+		else if(argv[i][0] == '-'){
 			fprintf(stderr, "Unknown option %s\n", argv[i]);
 			return usage(stderr), 1;
 		} else if(search) {
