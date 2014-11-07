@@ -22,7 +22,7 @@ void usage(FILE* stream) {
 		"Hanchly 汉查利 Chinese Dictionary (Command Line)\n"
 		"	-u, --unihan		Search for character in Unihan database\n"
 		"	-p, --pinyin		Search CEDICT for pinyin\n"
-		"	-h, --hanzi			Search CEDICT for hanzi\n"
+		"	-z, --hanzi			Search CEDICT for hanzi\n"
 		"	-e, --english		Search CEDICT for english\n"
 		"	-n, --lines=N		Find the first N results (default 5)\n"
 		"	-h, --help			Display this help message\n"
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 			type = SEARCH_UNIHAN;
 		else if(type == SEARCH_GUESS && (strcmp(argv[i], "-p") == 0 || strcmp(argv[i], "--pinyin") == 0))
 			type = HANCHLY_CEDICT_PINYIN;
-		else if(type == SEARCH_GUESS && (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--hanzi") == 0))
+		else if(type == SEARCH_GUESS && (strcmp(argv[i], "-z") == 0 || strcmp(argv[i], "--hanzi") == 0))
 			type = HANCHLY_CEDICT_HANZI;
 		else if(type == SEARCH_GUESS && (strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--english") == 0))
 			type = HANCHLY_CEDICT_ENGLISH;
