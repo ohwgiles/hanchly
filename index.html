@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Hanchly 汉查利</title>
+<style type="text/css">
+	body { font-family: Lucida Grande, Tahoma, sans; font-size: 9pt; color: #555; }
+	a:link { text-decoration: none; color: #55f; }
+	a:hover { text-decoration: underline; }
+	a:visited { text-decoration: none; color: #55f; }
+	a:active { text-decoration: none; color: #55f; }
+	div#main { margin-left: 40px; width: 790px; }
+	h3 { margin-bottom: 0; }
+	div.code { margin: 10px; padding: 10px; border: 1px dashed gray; background: #eed; font-family: monospace; }
+</style>
+</head>
+<body>
+<a href="https://github.com/ohwgiles/hanchly"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+<div id="main">
+<h1>*hanchly 汉查利</h1>
+<h2>A command-line Chinese dictionary</h2>
+<img src="screenshot.png">
+<p>Hanchly is a simple Linux command-line dictionary written in C and based on <a href="http://cc-cedict.org/wiki/">CEDICT</a> and the <a href="http://www.unicode.org/charts/unihan.html">Unihan database</a>. Character sorting is based on <a href="http://lingua.mtsu.edu/chinese-computing/statistics/">research by Jun Da</a></p>
+<p>Hanchly source code is released under a permissive license, but in accordance with the license terms of the aforementioned data sources may only be used for personal/research/educational purposes</p>
+<p>To install from source:</p>
+<div class="code">
+$ git clone https://github.com/ohwgiles/hanchly.git<br>
+$ mkdir -p path/to/build &amp;&amp; cd path/to/build<br>
+$ cmake path/to/source -DCMAKE_BUILD_TYPE=Release<br>
+$ make</div>
+<div style="height: 30px;"></div>
+</body>
+</html>
+
