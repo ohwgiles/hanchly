@@ -24,7 +24,7 @@ macro(add_as_obj FILENAME)
 			COMMAND objcopy --rename-section .data=.rodata,alloc,load,readonly,data,contents ${OBJ_OUTPUT}
 			DEPENDS ${OBJ_INPUT}
 			WORKING_DIRECTORY ${SOURCE_DIR}
-			COMMENT Generating ${OBJ_OUTPUT}
+			COMMENT "Generating ${OBJ_OUTPUT}"
 	)
 	list(APPEND OBJCOPY_BINARIES ${OBJ_OUTPUT})
 endmacro(add_as_obj)

@@ -7,7 +7,7 @@
 // permitted under conditions stipulated in the file
 // COPYING, which is distributed with Hanchly.
 //
-#include "cedict.h"
+#include "dict.h"
 #include "pinyin.h"
 #include <string.h>
 #include <stdlib.h>

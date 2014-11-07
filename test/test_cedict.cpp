@@ -8,7 +8,7 @@
 // COPYING, which is distributed with Hanchly.
 //
 #include <gtest/gtest.h>
-#include "cedict.h"
+#include "dict.h"
 
 
 TEST(Cedict, EnglishCaseInsensitiveSearch) {
